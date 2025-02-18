@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
+import HeroSection from "../components/HeroSection";
 export default function Dashboard() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -9,7 +9,8 @@ export default function Dashboard() {
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     if (!userId) {
-      router.push("/login");
+      // router.push("/login");
+      setIsAuthenticated(true);
     } else {
       setIsAuthenticated(true);
     }
@@ -18,8 +19,8 @@ export default function Dashboard() {
   if (!isAuthenticated) return <p>Loading...</p>;
 
   return (
-    <div className="text-center p-6">
-      <h1 className="text-3xl font-bold">Welcome to the Dashboard</h1>
+    <div className="">
+      <HeroSection/>
       <button
         onClick={() => {
           localStorage.removeItem("userId");
