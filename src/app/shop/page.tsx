@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import HeroSection from "../components/HeroSection";
+import WorkInProgress from "../components/WorkInProgress";
 export default function Dashboard() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -20,7 +20,7 @@ export default function Dashboard() {
 
   return (
     
-      <HeroSection/>
+      <WorkInProgress/>
      
   );
 }

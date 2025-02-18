@@ -24,7 +24,7 @@ const Navbar = () => {
     setIsLoggedIn(true);
   }, []);
   return (
-    <div className="p-5 mx-40 h-16">
+    <div className="w-full bg-white p-5 px-40 h-16">
       
       <div className="flex justify-between items-center align-center h-full">
         <div>
@@ -33,17 +33,21 @@ const Navbar = () => {
         <NavigationMenu>
           <NavigationMenuList>
           <NavigationMenuItem>
-          <Link href="/login" legacyBehavior passHref>
-            <NavigationMenuLink className={`text-lg ${navigationMenuTriggerStyle()}`}>
+          <Link href="/dashboard" legacyBehavior passHref>
+            <NavigationMenuLink className={`text-[18px] ${navigationMenuTriggerStyle()}`}>
               Home
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="text-lg">Shop</NavigationMenuTrigger>
+              <Link href="/shop" passHref>
+              
+              
+                <NavigationMenuTrigger className="text-lg">Shop</NavigationMenuTrigger>
+              </Link>
               <NavigationMenuContent className="h-96">
                 <NavigationMenuLink >
-                <div className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                <div className="z-20 grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
               
                 </div>
                 </NavigationMenuLink>
