@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import HeroSection from "../components/HeroSection";
 import BrandLogos from "../components/BrandLogos";
+import Featured from "../components/Featured";
 export default function Dashboard() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -25,6 +26,8 @@ export default function Dashboard() {
       <HeroSection />
       
       <BrandLogos />
+
+      <Featured/>
       </>
      
   );
