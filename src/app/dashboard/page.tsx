@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import HeroSection from "../components/HeroSection";
+import BrandLogos from "../components/BrandLogos";
 export default function Dashboard() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -16,11 +17,15 @@ export default function Dashboard() {
     }
   }, []);
 
-  if (!isAuthenticated) return <p>Loading...</p>;
+  if (!isAuthenticated) return (<HeroSection/>);
 
   return (
     
-      <HeroSection/>
+      <>
+      <HeroSection />
+      
+      <BrandLogos />
+      </>
      
   );
 }

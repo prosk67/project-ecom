@@ -34,7 +34,7 @@ const Navbar = () => {
           <NavigationMenuList>
           <NavigationMenuItem>
           <Link href="/dashboard" legacyBehavior passHref>
-            <NavigationMenuLink className={`text-[18px] ${navigationMenuTriggerStyle()}`}>
+            <NavigationMenuLink className="text-lg font-semibold">
               Home
             </NavigationMenuLink>
           </Link>
