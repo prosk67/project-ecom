@@ -72,7 +72,7 @@ const Featured = () => {
 
   return (
     // 50% on small screens and 33% on larger screens.
-    <div className="my-10 w-full flex flex-col items-center">
+    <div className="mt-10 w-full flex flex-col items-center">
       <h1 className="w-[70vw] text-5xl font-semibold text-left">Featured</h1>
       <Carousel
         opts={{

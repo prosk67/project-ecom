@@ -4,22 +4,27 @@ import { useRouter } from "next/navigation";
 import HeroSection from "../components/HeroSection";
 import BrandLogos from "../components/BrandLogos";
 import Featured from "../components/Featured";
+import CTA from "../components/CTA";
 export default function Dashboard() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
+    
     if (!userId) {
-      // router.push("/login");
-      setIsAuthenticated(true);
+      setIsAuthenticated(false);
+      
     } else {
+      
       setIsAuthenticated(true);
+      
+      
     }
+    
   }, []);
-
-  if (!isAuthenticated) return (<HeroSection/>);
-
+  
+  // 
   return (
     
       <>
@@ -28,6 +33,8 @@ export default function Dashboard() {
       <BrandLogos />
 
       <Featured/>
+
+      <CTA/>
       </>
      
   );

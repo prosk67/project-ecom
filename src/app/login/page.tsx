@@ -24,7 +24,12 @@ const LoginPage = () => {
 
     if (response.ok) {
       localStorage.setItem("userId", data.userId);
+      // window.location.reload();
+      
       router.push("/dashboard");
+      
+      
+      
     } else {
       setError(data.message);
     }
@@ -76,6 +81,7 @@ const LoginPage = () => {
             
               type="submit"
               className=""
+              
             >
               Sign in
             </Button>

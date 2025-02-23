@@ -2,9 +2,11 @@
 import Link from "next/link";
 import * as React from "react"
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/ui/icons"
+import { usePathname } from "next/navigation";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -16,8 +18,13 @@ import {
   navigationMenuTriggerStyle,
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
+import { Icon } from "lucide-react";
+
+
 
 const Navbar = () => {
+  const pathname = usePathname();
+  const router = useRouter();
   const components: { title: string; href: string; description: string }[] = [
     {
       title: "Alert Dialog",
@@ -58,18 +65,24 @@ const Navbar = () => {
 
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
 
   useEffect(() => {
     // Check if the user is logged in (e.g., by checking localStorage or a global state)
+    
     const userId = localStorage.getItem("userId");
-    // setIsLoggedIn(!!userId);
-    setIsLoggedIn(true);
-  }, []);
+    setIsLoggedIn(!!userId);
+    
+    // setIsLoggedIn(true);
+  }, [pathname]);
+  
   return (
+    
     <div className="w-full bg-white p-5 px-40 h-16">
       <div className="flex justify-between items-center align-center h-full">
         <div>
-          <h1>Audio Store</h1>
+          
+          {<Icons.logo className="w-8 h-8 color-black" />}
         </div>
         <NavigationMenu>
           <NavigationMenuList>

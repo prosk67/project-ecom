@@ -19,6 +19,9 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 } */
+.bg-gradient-radial {
+  background: radial-gradient(circle, white, transparent);
+}
 @layer base {
   :root {
     --background: 0 0% 100%;
