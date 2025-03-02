@@ -15,6 +15,8 @@ async function main() {
     )
   );
 
+  
+
   // Create Products
   for (let i = 0; i < 10; i++) {
     await db.product.create({

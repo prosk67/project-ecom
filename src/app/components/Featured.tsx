@@ -5,6 +5,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+
 import {
   Card,
   CardContent,
@@ -14,58 +15,128 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import React from "react";
+import ProductCard from "./ProductCard";
 
 const Featured = () => {
   const products = [
     {
       id: 1,
       name: "Basic Tee",
-      href: "#",
-      imageSrc:
-        "https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
-      imageAlt: "Front of men's Basic Tee in black.",
+      
+      images:
+      
+        [
+          {
+            url: "https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+
+          }
+        ]
+      ,
+      
       price: "$35",
-      color: "Black",
+      description: "Black",
     },
     {
       id: 2,
       name: "Basic Tee",
-      href: "#",
-      imageSrc:
-        "https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
-      imageAlt: "Front of men's Basic Tee in black.",
+      
+      images:
+      
+        [
+          {
+            url: "https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+
+          }
+        ]
+      ,
+      
       price: "$35",
-      color: "Black",
+      description: "Black",
     },
     {
       id: 3,
       name: "Basic Tee",
-      href: "#",
-      imageSrc:
-        "https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
-      imageAlt: "Front of men's Basic Tee in black.",
+      
+      images:
+      
+        [
+          {
+            url: "https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+
+          }
+        ]
+      ,
+      
       price: "$35",
-      color: "Black",
+      description: "Black",
     },
     {
       id: 4,
       name: "Basic Tee",
-      href: "#",
-      imageSrc:
-        "https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
-      imageAlt: "Front of men's Basic Tee in black.",
+      
+      images:
+      
+        [
+          {
+            url: "https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+
+          }
+        ]
+      ,
+      
       price: "$35",
-      color: "Black",
+      description: "Black",
     },
     {
       id: 5,
       name: "Basic Tee",
-      href: "#",
-      imageSrc:
-        "https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
-      imageAlt: "Front of men's Basic Tee in black.",
+      
+      images:
+      
+        [
+          {
+            url: "https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+
+          }
+        ]
+      ,
+      
       price: "$35",
-      color: "Black",
+      description: "Black",
+    },,
+    {
+      id: 6,
+      name: "Basic Tee",
+      
+      images:
+      
+        [
+          {
+            url: "https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+
+          }
+        ]
+      ,
+      
+      price: "$35",
+      description: "Black",
+    },
+    {
+      id: 7,
+      name: "Basic Tee",
+      
+      images:
+      
+        [
+          {
+            url: "https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+
+          }
+        ]
+      ,
+      
+      price: "$35",
+      description: "Black",
     },
     // More products...
   ];
@@ -83,38 +154,11 @@ const Featured = () => {
         <CarouselContent>
           {products.map((product) => (
             <CarouselItem
-              key={product.id}
+              key={product?.id}
               className="md:basis-1/2 lg:basis-1/4"
             >
               <div className="p-1">
-                <Card>
-                  <CardContent className="flex flex-col aspect-square items-center justify-center p-6">
-                    <img
-                      alt={product.imageAlt}
-                      src={product.imageSrc}
-                      className="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80"
-                    />
-                    <div className="w-full mt-4 flex justify-between">
-                      <div>
-                        <h3 className="text-sm text-gray-700">
-                          <a href={product.href}>
-                            <span
-                              aria-hidden="true"
-                              className="absolute inset-0"
-                            />
-                            {product.name}
-                          </a>
-                        </h3>
-                        <p className="mt-1 text-sm text-gray-500">
-                          {product.color}
-                        </p>
-                      </div>
-                      <p className="text-sm font-medium text-gray-900">
-                        {product.price}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
+                <ProductCard product ={product}/>
               </div>
             </CarouselItem>
           ))}

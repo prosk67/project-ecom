@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
@@ -9,6 +10,7 @@ import {
 } from "@/components/ui/carousel";
 
 const HeroSection = () => {
+  const router = useRouter();
   return (
     <div className="flex justify-center items-center min-w-[100vw]">
       <Carousel 
@@ -24,7 +26,7 @@ const HeroSection = () => {
               <div className="rounded-3xl w-full h-full bg-black relative z-1 flex flex-col items-center justify-center text-white">
                 <h1 className="text-5xl font-bold mb-4">Welcome to Audio Store</h1>
                 <p className="text-xl mb-8">Discover the best audio products</p>
-                <Button className="bg-blue-500 hover:bg-black-700 text-white font-bold py-2 px-4 rounded">
+                <Button onClick={()=>router.push("/shop")} className="bg-blue-500 hover:bg-black-700 text-white font-bold py-2 px-4 rounded">
                   Shop Now
                 </Button>
               </div>
@@ -35,7 +37,7 @@ const HeroSection = () => {
               <div className="rounded-3xl w-full h-full bg-black relative z-1 flex flex-col items-center justify-center text-white">
                 <h1 className="text-5xl font-bold mb-4">Welcome to Audio Store</h1>
                 <p className="text-xl mb-8">Discover the best audio products</p>
-                <Button className="bg-blue-500 hover:bg-black-700 text-white font-bold py-2 px-4 rounded">
+                <Button onClick={()=>router.push("/shop")} className="bg-blue-500 hover:bg-black-700 text-white font-bold py-2 px-4 rounded">
                   Shop Now
                 </Button>
               </div>
@@ -46,7 +48,7 @@ const HeroSection = () => {
               <div className="rounded-3xl w-full h-full bg-black relative z-1 flex flex-col items-center justify-center text-white">
                 <h1 className="text-5xl font-bold mb-4">Welcome to Audio Store</h1>
                 <p className="text-xl mb-8">Discover the best audio products</p>
-                <Button className="bg-blue-500 hover:bg-black-700 text-white font-bold py-2 px-4 rounded">
+                <Button onClick={()=>router.push("/shop")} className="bg-blue-500 hover:bg-black-700 text-white font-bold py-2 px-4 rounded">
                   Shop Now
                 </Button>
               </div>
