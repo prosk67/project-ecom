@@ -20,13 +20,13 @@
 
 .track-slider {
   /* background-color: #022140; */
-  width: 10vw;
+  width: 13vw;
   z-index: 1;
 }
 
 .range-slider {
   z-index: 2;
-  width: 5vw;
+  width: 200px;
 }
 
 .slider-left-value {

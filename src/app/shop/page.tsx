@@ -19,6 +19,8 @@ import {
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
   ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
   FunnelIcon,
   MinusIcon,
   PlusIcon,
@@ -35,13 +37,7 @@ const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
   { name: "Price: High to Low", href: "#", current: false },
 ];
-const subCategories = [
-  { name: "Totes", href: "#" },
-  { name: "Backpacks", href: "#" },
-  { name: "Travel Bags", href: "#" },
-  { name: "Hip Bags", href: "#" },
-  { name: "Laptop Sleeves", href: "#" },
-];
+
 const filters = [
   {
     id: "category",
@@ -49,7 +45,7 @@ const filters = [
     options: [
       { value: "Accessories", label: "Accessories", checked: false },
       { value: "Headphones", label: "Headphones", checked: false },
-      { value: "Microphones", label: "Microphones", checked: true },
+      { value: "Microphones", label: "Microphones", checked: false },
       { value: "Speakers", label: "Speakers", checked: false },
       
     ],
@@ -58,7 +54,7 @@ const filters = [
     id: "price",
     name: "Price",
     options: [
-      { value: "<100", label: "<100", checked: false },
+      { value: "", label: "", checked: false },
 
 
     ],
@@ -79,16 +75,37 @@ function classNames(...classes) {
 }
 
 export default function Shop() {
-  const [rangeValues, setRangeValues] = useState({ min: 0, max: 100 });
-
-  const handleRangeChange = (values) => {
-    setRangeValues(values);
-  };
-
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [rangeValues, setRangeValues] = useState({ min: 100, max: 5000 });
+  const [selectedFilters, setSelectedFilters] = useState({
+    category: [],
+    stock: [],
+  });
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 6; // Number of products per page
+
+  const handleRangeChange = (values) => {
+    setRangeValues(values);
+    
+  };
+
+  const handleFilterChange = (sectionId, value) => {
+    setSelectedFilters((prevFilters) => {
+      const updatedFilters = { ...prevFilters };
+      if (updatedFilters[sectionId].includes(value)) {
+        updatedFilters[sectionId] = updatedFilters[sectionId].filter(
+          (item) => item !== value
+        );
+      } else {
+        updatedFilters[sectionId].push(value);
+      }
+      return updatedFilters;
+    });
+  };
+
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -99,24 +116,37 @@ export default function Shop() {
       setIsAuthenticated(true);
     }
     const fetchProducts = async () => {
-      const response = await fetch("/api/product", {
+      const queryParams = new URLSearchParams({
+        minPrice: rangeValues.min,
+        maxPrice: rangeValues.max,
+        category: selectedFilters.category.join(","),
+        stock: selectedFilters.stock.join(","),
+      }).toString();
+      const response = await fetch(`/api/product?${queryParams}`, {
         method: "GET",
       });
 
       const data = await response.json();
+    
 
       if (response.ok) {
         // window.location.reload();
-        console.log(data);
+        
         setProducts(data);
       } else {
         setError(data.message);
       }
     };
     fetchProducts();
-  }, []);
+  }, [rangeValues, selectedFilters]);
 
   // if (!isAuthenticated) return <p>Loading...</p>;
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
@@ -233,7 +263,7 @@ export default function Shop() {
         <main className="mx-auto max-w-[70vw] px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-              New Arrivals
+              Products
             </h1>
 
             <div className="flex items-center">
@@ -331,8 +361,8 @@ export default function Shop() {
                               <div className="group grid size-4 grid-cols-1">
                                   {section.id === "price" ? (
                                     <>  </>
-                                  ):
-                                  
+                                  ):(
+                                  <>
                                 <input
                                   defaultValue={option.value}
                                   defaultChecked={option.checked}
@@ -340,8 +370,14 @@ export default function Shop() {
                                   name={`${section.id}[]`}
                                   type="checkbox"
                                   className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
-                                />
+                                  onChange={() =>
+                                    handleFilterChange(
+                                      section.id,
+                                      option.value
+                                    )
                                   }
+                                />
+                                  
                                 <svg
                                   fill="none"
                                   viewBox="0 0 14 14"
@@ -362,6 +398,8 @@ export default function Shop() {
                                     className="opacity-0 group-has-indeterminate:opacity-100"
                                   />
                                 </svg>
+                                  </>
+                                )}
                               </div>
                             </div>
                             {
@@ -372,13 +410,18 @@ export default function Shop() {
                               >
                                 {option.label}
                               </label>
-                              ):( <DoubleRangeSlider
-                                min={200}
-                                max={1000}
-                                onChange={handleRangeChange}
-                              />)
+                              ):( 
+                              <div className="mr-10">
+                                <DoubleRangeSlider
+                                  min={100}
+                                  max={5000}
+                                  onChange={handleRangeChange}
+                                />
                               
+                              </div>
+                              )    
                             }
+                          
                            
                           </div>
                         ))}
@@ -391,9 +434,42 @@ export default function Shop() {
               {/* Product grid */}
               <div className="lg:col-span-3">
                 <div className="grid grid-cols-3 gap-4">
-                  {products?.map((product) => (
+                  {currentProducts?.map((product) => (
                     <ProductCard key={product?.id} product={product} />
                   ))}
+                </div>
+                <div className="flex justify-center mt-6">
+                  <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                    <button
+                      onClick={() => paginate(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                    >
+                      <span className="sr-only">Previous</span>
+                      <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
+                    </button>
+                    {Array.from({ length: Math.ceil(products.length / productsPerPage) }, (_, index) => (
+                      <button
+                        key={index + 1}
+                        onClick={() => paginate(index + 1)}
+                        className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+                          currentPage === index + 1
+                            ? "z-10 bg-indigo-50 border-indigo-500 text-indigo-600"
+                            : "bg-white border-gray-300 text-gray-500 hover:bg-gray-50"
+                        }`}
+                      >
+                        {index + 1}
+                      </button>
+                    ))}
+                    <button
+                      onClick={() => paginate(currentPage + 1)}
+                      disabled={currentPage === Math.ceil(products.length / productsPerPage)}
+                      className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                    >
+                      <span className="sr-only">Next</span>
+                      <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+                    </button>
+                  </nav>
                 </div>
               </div>
             </div>

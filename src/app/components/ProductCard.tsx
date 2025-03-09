@@ -20,9 +20,9 @@ const ProductCard = ({ product }) => {
                 {product.name}
               </a>
             </h3>
-            <p className="mt-1 text-sm text-gray-500">{product.id}</p>
+            <p className="mt-1 text-sm text-gray-500">{product.category.name}</p>
           </div>
-          <p className="text-sm font-medium text-gray-900">{product.price}</p>
+          <p className="text-sm font-medium text-gray-900">BDT {parseInt(product.price)}</p>
         </div>
       </CardContent>
     </Card>

@@ -9,9 +9,9 @@ async function main() {
   // Create Categories
   const categories = await Promise.all(
     ['Headphones', 'Speakers', 'Microphones', 'Accessories'].map(name =>
-      db.category.create({
-        data: { name },
-      })
+      db.category.findMany({
+        where: {name}
+  })
     )
   );
 
@@ -23,9 +23,9 @@ async function main() {
       data: {
         name: faker.commerce.productName(),
         description: faker.commerce.productDescription(),
-        price: parseFloat(faker.commerce.price()),
+        price: faker.number.int({ min: 100, max: 5000 }),
         stock: faker.number.int({ min: 1, max: 100 }),
-        categoryId: faker.helpers.arrayElement(categories).id,
+        categoryId: faker.helpers.arrayElement(categories[i%4]).id,
         images: {
           create: [{ url: faker.image.url() }],
         },

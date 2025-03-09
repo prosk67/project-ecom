@@ -28,12 +28,12 @@ interface DoubleRangeSliderProps {
 const DoubleRangeSlider: React.FC<DoubleRangeSliderProps> = ({
     min,
     max,
-    trackColor = "#cecece",
+    trackColor = "#000000",
     onChange,
-    rangeColor = "#ff0303",
+    rangeColor = "#808080",
     valueStyle = valueCSS,
-    width = "300px",
-    currencyText = "$",
+    width = "13vw",
+    currencyText = "BDT",
 }) => {
 
     const [minVal, setMinVal] = useState(min);
@@ -45,7 +45,7 @@ const DoubleRangeSlider: React.FC<DoubleRangeSliderProps> = ({
 
     // convert to percentage
     const getPercent = useCallback(
-        (value: number) => Math.round(((value - min) / (max - min)) * 100),
+        (value: number) => Math.round(((value - min) / (max - min)) *100),
         [min, max]
     );
 
@@ -80,19 +80,19 @@ const DoubleRangeSlider: React.FC<DoubleRangeSliderProps> = ({
     }, [minVal, maxVal, onChange]);
 
     return (
-        <div className='w-full flex items-center justify-center flex-col space-y-14'>
+        <div className='w-full flex items-left justify-left flex-col space-y-14'>
 
             {/* Display Price Value */}
-            <div className="w-[300px] px-4 flex items-center justify-between gap-x-5">
+            <div className="w-[250px] px-4 flex items-left justify-evenly gap-x-5">
 
-                <p className="text-xl text-neutral-100 font-semibold">
-                    {currencyText} {minVal}
+                <p className="text-xl text-neutral-900 font-semibold">
+                    <span className='font-light'>{currencyText}</span> {minVal}
                 </p>
 
-                <div className="flex-1 border-dashed border border-neutral-500 mt-1"></div>
+                <div className="flex-1 h-[1px] border-dashed border border-neutral-500 mt-4"></div>
 
-                <p className="text-xl text-neutral-100 font-semibold">
-                    {currencyText} {maxVal}
+                <p className="text-xl text-neutral-900 font-semibold">
+                <span className='font-light'>{currencyText}</span> {maxVal}
                 </p>
 
             </div>
