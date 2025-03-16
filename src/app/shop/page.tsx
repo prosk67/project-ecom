@@ -31,8 +31,6 @@ import ProductCard from "../components/ProductCard";
 import { Ms_Madi } from "next/font/google";
 
 const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
   { name: "Newest", href: "#", current: false },
   { name: "Price: Low to High", href: "#", current: false },
   { name: "Price: High to Low", href: "#", current: false },
@@ -47,17 +45,12 @@ const filters = [
       { value: "Headphones", label: "Headphones", checked: false },
       { value: "Microphones", label: "Microphones", checked: false },
       { value: "Speakers", label: "Speakers", checked: false },
-      
     ],
   },
   {
     id: "price",
     name: "Price",
-    options: [
-      { value: "", label: "", checked: false },
-
-
-    ],
+    options: [{ value: "", label: "", checked: false }],
   },
   {
     id: "stock",
@@ -65,7 +58,6 @@ const filters = [
     options: [
       { value: "In", label: "In Stock", checked: false },
       { value: "Out", label: "Out of Stock", checked: false },
-
     ],
   },
 ];
@@ -86,10 +78,10 @@ export default function Shop() {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 6; // Number of products per page
+  const [selectedSort, setSelectedSort] = useState(sortOptions[0].name);
 
   const handleRangeChange = (values) => {
     setRangeValues(values);
-    
   };
 
   const handleFilterChange = (sectionId, value) => {
@@ -106,6 +98,9 @@ export default function Shop() {
     });
   };
 
+  const handleSortChange = (sortOption) => {
+    setSelectedSort(sortOption);
+  };
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -121,29 +116,32 @@ export default function Shop() {
         maxPrice: rangeValues.max,
         category: selectedFilters.category.join(","),
         stock: selectedFilters.stock.join(","),
+        sort: selectedSort, // Add sort to query parameters
       }).toString();
       const response = await fetch(`/api/product?${queryParams}`, {
         method: "GET",
       });
 
       const data = await response.json();
-    
 
       if (response.ok) {
         // window.location.reload();
-        
+
         setProducts(data);
       } else {
         setError(data.message);
       }
     };
     fetchProducts();
-  }, [rangeValues, selectedFilters]);
+  }, [rangeValues, selectedFilters, selectedSort]);
 
   // if (!isAuthenticated) return <p>Loading...</p>;
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -183,8 +181,6 @@ export default function Shop() {
 
               {/* Filters */}
               <form className="mt-4 border-t border-gray-200">
-                
-
                 {filters.map((section) => (
                   <Disclosure
                     key={section.id}
@@ -286,7 +282,8 @@ export default function Shop() {
                     {sortOptions.map((option) => (
                       <MenuItem key={option.name}>
                         <a
-                          href={option.href}
+                          href="#"
+                          onClick={() => handleSortChange(option.name)}
                           className={classNames(
                             option.current
                               ? "font-medium text-gray-900"
@@ -328,8 +325,6 @@ export default function Shop() {
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Filters */}
               <form className="hidden lg:block">
-            
-
                 {filters.map((section) => (
                   <Disclosure
                     key={section.id}
@@ -359,70 +354,65 @@ export default function Shop() {
                           <div key={option.value} className="flex gap-3">
                             <div className="flex h-5 shrink-0 items-center">
                               <div className="group grid size-4 grid-cols-1">
-                                  {section.id === "price" ? (
-                                    <>  </>
-                                  ):(
+                                {section.id === "price" ? (
+                                  <> </>
+                                ) : (
                                   <>
-                                <input
-                                  defaultValue={option.value}
-                                  defaultChecked={option.checked}
-                                  id={`filter-${section.id}-${optionIdx}`}
-                                  name={`${section.id}[]`}
-                                  type="checkbox"
-                                  className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
-                                  onChange={() =>
-                                    handleFilterChange(
-                                      section.id,
-                                      option.value
-                                    )
-                                  }
-                                />
-                                  
-                                <svg
-                                  fill="none"
-                                  viewBox="0 0 14 14"
-                                  className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25"
-                                >
-                                  <path
-                                    d="M3 8L6 11L11 3.5"
-                                    strokeWidth={2}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="opacity-0 group-has-checked:opacity-100"
-                                  />
-                                  <path
-                                    d="M3 7H11"
-                                    strokeWidth={2}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="opacity-0 group-has-indeterminate:opacity-100"
-                                  />
-                                </svg>
+                                    <input
+                                      defaultValue={option.value}
+                                      defaultChecked={option.checked}
+                                      id={`filter-${section.id}-${optionIdx}`}
+                                      name={`${section.id}[]`}
+                                      type="checkbox"
+                                      className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
+                                      onChange={() =>
+                                        handleFilterChange(
+                                          section.id,
+                                          option.value
+                                        )
+                                      }
+                                    />
+
+                                    <svg
+                                      fill="none"
+                                      viewBox="0 0 14 14"
+                                      className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25"
+                                    >
+                                      <path
+                                        d="M3 8L6 11L11 3.5"
+                                        strokeWidth={2}
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="opacity-0 group-has-checked:opacity-100"
+                                      />
+                                      <path
+                                        d="M3 7H11"
+                                        strokeWidth={2}
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="opacity-0 group-has-indeterminate:opacity-100"
+                                      />
+                                    </svg>
                                   </>
                                 )}
                               </div>
                             </div>
-                            {
-                              section.id !== "price" ? (
-                                <label
+                            {section.id !== "price" ? (
+                              <label
                                 htmlFor={`filter-${section.id}-${optionIdx}`}
                                 className="text-sm text-gray-600"
                               >
                                 {option.label}
                               </label>
-                              ):( 
+                            ) : (
                               <div className="mr-10">
                                 <DoubleRangeSlider
                                   min={100}
                                   max={5000}
                                   onChange={handleRangeChange}
                                 />
-                              
                               </div>
-                              )    
-                            }
-                          
-                           
+                            )}
                           </div>
                         ))}
                       </div>
@@ -439,7 +429,10 @@ export default function Shop() {
                   ))}
                 </div>
                 <div className="flex justify-center mt-6">
-                  <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                  <nav
+                    className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+                    aria-label="Pagination"
+                  >
                     <button
                       onClick={() => paginate(currentPage - 1)}
                       disabled={currentPage === 1}
@@ -448,26 +441,35 @@ export default function Shop() {
                       <span className="sr-only">Previous</span>
                       <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
                     </button>
-                    {Array.from({ length: Math.ceil(products.length / productsPerPage) }, (_, index) => (
-                      <button
-                        key={index + 1}
-                        onClick={() => paginate(index + 1)}
-                        className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
-                          currentPage === index + 1
-                            ? "z-10 bg-indigo-50 border-indigo-500 text-indigo-600"
-                            : "bg-white border-gray-300 text-gray-500 hover:bg-gray-50"
-                        }`}
-                      >
-                        {index + 1}
-                      </button>
-                    ))}
+                    {Array.from(
+                      { length: Math.ceil(products.length / productsPerPage) },
+                      (_, index) => (
+                        <button
+                          key={index + 1}
+                          onClick={() => paginate(index + 1)}
+                          className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+                            currentPage === index + 1
+                              ? "z-10 bg-indigo-50 border-indigo-500 text-indigo-600"
+                              : "bg-white border-gray-300 text-gray-500 hover:bg-gray-50"
+                          }`}
+                        >
+                          {index + 1}
+                        </button>
+                      )
+                    )}
                     <button
                       onClick={() => paginate(currentPage + 1)}
-                      disabled={currentPage === Math.ceil(products.length / productsPerPage)}
+                      disabled={
+                        currentPage ===
+                        Math.ceil(products.length / productsPerPage)
+                      }
                       className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                     >
                       <span className="sr-only">Next</span>
-                      <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+                      <ChevronRightIcon
+                        className="h-5 w-5"
+                        aria-hidden="true"
+                      />
                     </button>
                   </nav>
                 </div>
@@ -476,7 +478,6 @@ export default function Shop() {
           </section>
         </main>
       </div>
-      
     </div>
   );
 }

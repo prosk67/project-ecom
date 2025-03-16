@@ -11,6 +11,23 @@ export async function GET(request: Request) {
     const categoryNames = url.searchParams.get("category")?.split(",") || [];
     const minPrice = parseInt(url.searchParams.get("minPrice") || "100");
     const maxPrice = parseInt(url.searchParams.get("maxPrice") || "5000");
+    const sort = url.searchParams.get("sort") || "Newest";
+    const stock = url.searchParams.get("stock")?.split(",") || [];
+
+    let orderBy = {};
+    switch (sort) {
+      case "Price: Low to High":
+        orderBy = { price: "asc" };
+        break;
+      case "Price: High to Low":
+        orderBy = { price: "desc" };
+        break;
+      case "Newest":
+      default:
+        orderBy = { createdAt: "desc" };
+        break;
+    }
+
     let query: any = {
       where: {
         price: {
@@ -22,9 +39,10 @@ export async function GET(request: Request) {
         images: true,
         category: true,
       },
+      orderBy,
     };
 
-    if (categoryNames[0] != '') {
+    if (categoryNames[0] != "") {
       // Fetch category IDs based on category names
       const categories = await db.category.findMany({
         where: {
@@ -43,7 +61,6 @@ export async function GET(request: Request) {
       query.where = {
         categoryId: {
           in: categoryIds,
-
         },
         price: {
           gte: minPrice,
@@ -51,16 +68,30 @@ export async function GET(request: Request) {
         },
       };
     }
+
+    if (stock[0] === "In") {
+      query.where.stock = {
+        gt: 0,
+      };
+    } else if (stock[0] === "Out") {
+      query.where.stock = {
+        equals: 0,
+      };
+    }
+
     // Execute the query
-    
-    console.log(categoryNames)
-    
+
+    console.log(categoryNames);
+
     const products = await db.product.findMany(query);
     console.log("Fetched products:", products);
     // Return the products
     return NextResponse.json(products, { status: 200 });
   } catch (error) {
     console.error("Error fetching products:", error);
-    return NextResponse.json({ error: "Unable to fetch products" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Unable to fetch products" },
+      { status: 500 }
+    );
   }
 }
