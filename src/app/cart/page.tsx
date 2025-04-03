@@ -9,6 +9,7 @@ export default function Cart() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [cartItems, setCartItems] = useState([]); // Initialize cartItems state
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false); // State for payment success popup
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -34,8 +35,7 @@ export default function Cart() {
         }
 
         const data = await response.json();
-        console.log("cartItems", data);
-        setCartItems(data|| []); // Set the cart items in state
+        setCartItems(data || []); // Set the cart items in state
       } catch (error) {
         console.error("Error fetching cart items:", error);
       }
@@ -93,6 +93,18 @@ export default function Cart() {
     });
   };
 
+  const handleCheckout = () => {
+    // Simulate a successful payment
+    setTimeout(() => {
+      setShowSuccessPopup(true); // Show the success popup
+    }, 1000);
+  };
+
+  const closePopup = () => {
+    setShowSuccessPopup(false); // Close the popup
+    router.push("/cart"); // Redirect to the homepage or another page
+  };
+
   if (!isAuthenticated) return <p>Loading...</p>;
 
   return (
@@ -144,9 +156,24 @@ export default function Cart() {
               </tr>
             </tfoot>
           </table>
-          <Button className="w-full mt-2 h-[4vh]">Checkout</Button>
+          <Button className="w-full mt-2 h-[4vh]" onClick={handleCheckout}>
+            Checkout
+          </Button>
         </div>
       </div>
+
+      {/* Payment Success Popup */}
+      {showSuccessPopup && (
+        <div className="z-50 fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+            <h2 className="text-2xl font-bold mb-4">Payment Successful!</h2>
+            <p className="text-gray-700 mb-6">Thank you for your purchase.</p>
+            <Button className="w-full" onClick={closePopup}>
+              Close
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
