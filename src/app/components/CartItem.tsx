@@ -7,18 +7,17 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
     <div className="my-4 rounded-lg bg-white">
       <div className="border border-gray-200 rounded-lg shadow-sm p-4 flex items-center gap-4">
         {/* Product Image */}
-        <Image
-          src={item.image} // Replace with the actual image URL
+        <img
+          src={item.product.images[0].url} // Replace with the actual image URL
           alt={item.product.name}
-          width={80}
-          height={80}
-          className="rounded-md object-cover"
+         
+          className="rounded-md object-cover h-16 w-16"
         />
 
         {/* Product Details */}
         <div className="flex-1">
           <h3 className="text-sm font-medium text-gray-900">{item.product.name}</h3>
-          <p className="text-sm text-gray-500">BDT {item.product.price}</p>
+          <p className="text-sm text-gray-500">BDT {parseInt(item.product.price)}</p>
         </div>
 
         {/* Quantity Controls */}

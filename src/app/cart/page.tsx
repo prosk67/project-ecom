@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import CartItem from "../components/CartItem"; // Import the CartItem component
 import { Button } from "@/components/ui/button";
+
 export default function Cart() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -27,25 +28,40 @@ export default function Cart() {
           },
           body: JSON.stringify({ userId }),
         });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch cart items");
+        }
+
         const data = await response.json();
-        setCartItems(data.cartItems); // Set the cart items in state
+        console.log("cartItems", data);
+        setCartItems(data|| []); // Set the cart items in state
       } catch (error) {
         console.error("Error fetching cart items:", error);
       }
-    }
+    };
 
     fetchCartItems(); // Call the function to fetch cart items
-  }, []);
+  }, [router]);
 
-  const handleIncrease = (id) => {
+  const handleIncrease = async (id) => {
     setCartItems((prev) =>
       prev.map((item) =>
         item.id === id ? { ...item, quantity: item.quantity + 1 } : item
       )
     );
+
+    // Update the quantity in the database
+    await fetch("/api/cart", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id, action: "increase" }),
+    });
   };
 
-  const handleDecrease = (id) => {
+  const handleDecrease = async (id) => {
     setCartItems((prev) =>
       prev.map((item) =>
         item.id === id && item.quantity > 1
@@ -53,10 +69,28 @@ export default function Cart() {
           : item
       )
     );
+
+    // Update the quantity in the database
+    await fetch("/api/cart", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id, action: "decrease" }),
+    });
   };
 
-  const handleRemove = (id) => {
+  const handleRemove = async (id) => {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
+
+    // Remove the item from the database
+    await fetch("/api/cart", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }),
+    });
   };
 
   if (!isAuthenticated) return <p>Loading...</p>;
@@ -65,8 +99,8 @@ export default function Cart() {
     <div className="w-[70vw] p-[5vh] my-[5vh] rounded-lg bg-white h-auto">
       <h1 className="text-2xl font-bold mb-6">Your Cart</h1>
       <div className="flex space-x-4">
+        {/* Cart Items Section */}
         <div className="w-full max-w-3xl space-y-4">
-          <div>{cartItems}</div>
           {cartItems.map((item) => (
             <CartItem
               key={item.id}
@@ -77,6 +111,8 @@ export default function Cart() {
             />
           ))}
         </div>
+
+        {/* Order Summary Section */}
         <div className="w-[20vw] border border-gray-200 rounded-lg my-4 p-4">
           <h1 className="text-xl text-center font-bold mb-6">Order Summary</h1>
           <table className="w-full text-left border-collapse">
@@ -90,9 +126,9 @@ export default function Cart() {
             <tbody>
               {cartItems.map((item) => (
                 <tr key={item.id}>
-                  <td className="py-2">{item.name}</td>
+                  <td className="py-2">{item.product.name}</td>
                   <td className="py-2 text-center">{item.quantity}</td>
-                  <td className="py-2 text-right">BDT {item.price * item.quantity}</td>
+                  <td className="py-2 text-right">BDT {item.product.price * item.quantity}</td>
                 </tr>
               ))}
             </tbody>
@@ -103,12 +139,12 @@ export default function Cart() {
                   {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
                 </td>
                 <td className="border-t py-2 text-right font-bold">
-                  BDT {cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)}
+                  BDT {cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0)}
                 </td>
               </tr>
             </tfoot>
           </table>
-          <Button className="w-full mt-2 h-[4vh]"> Checkout</Button>
+          <Button className="w-full mt-2 h-[4vh]">Checkout</Button>
         </div>
       </div>
     </div>

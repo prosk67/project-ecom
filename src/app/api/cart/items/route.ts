@@ -8,13 +8,20 @@ export async function POST(req: Request) {
 
       const cartItems = await prisma.cartItem.findMany(
         {
-          where: {
-            userId: userId, // Filter cart items by userId
-          },
-          include: {
-            product: true, // Include product details
-             // Include product images
-          },
+            where: {
+                userId: userId, // Filter cart items by userId
+              },
+              include: {
+                product: {
+                  include: {
+                    images: {
+                      select: {
+                        url: true, // Include only the image URL field from the image table
+                      },
+                    },
+                  },
+                },
+              },
         }
       ); // Fetch all cart items from the database
 
