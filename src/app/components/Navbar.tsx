@@ -114,7 +114,7 @@ const Navbar = () => {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        <div className=" flex ">
+        <div className=" flex gap-4">
           {isLoggedIn ? (
             
               <div className="flex items-center gap-4">

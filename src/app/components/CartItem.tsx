@@ -9,7 +9,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
         {/* Product Image */}
         <Image
           src={item.image} // Replace with the actual image URL
-          alt={item.name}
+          alt={item.product.name}
           width={80}
           height={80}
           className="rounded-md object-cover"
@@ -17,8 +17,8 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
 
         {/* Product Details */}
         <div className="flex-1">
-          <h3 className="text-sm font-medium text-gray-900">{item.name}</h3>
-          <p className="text-sm text-gray-500">BDT {item.price}</p>
+          <h3 className="text-sm font-medium text-gray-900">{item.product.name}</h3>
+          <p className="text-sm text-gray-500">BDT {item.product.price}</p>
         </div>
 
         {/* Quantity Controls */}

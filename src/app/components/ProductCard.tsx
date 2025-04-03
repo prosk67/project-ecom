@@ -4,6 +4,32 @@ import { Button } from "@headlessui/react";
 import React from "react";
 
 const ProductCard = ({ product }) => {
+
+  const handleSubmit = async () => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      alert("Please login to add items to your cart.");
+      return;
+    }
+    const response = await fetch("/api/cart", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId,
+        productId: product.id,
+        quantity: 1,
+      }),
+    });
+    const data = await response.json();
+    if (!data) {
+      alert("Failed to add product to cart.");
+    } else {
+      alert("Product added to cart successfully!");
+    }
+  };
+
   return (
     <Card>
       <CardContent className="flex flex-col aspect-square items-center justify-center p-6">
@@ -28,7 +54,7 @@ const ProductCard = ({ product }) => {
           <p className="text-sm font-medium text-gray-900">BDT {parseInt(product.price)}</p>
         </div>
         <div className="mt-4 w-full">
-          <Button className="w-full bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
+          <Button className="w-full bg-black text-white px-4 py-2 rounded hover:bg-gray-800" onClick={handleSubmit}>
             Add to cart
           </Button>
         </div>
