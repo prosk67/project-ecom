@@ -77,7 +77,17 @@ const Navbar = () => {
   return (
     <div className="w-full bg-white p-5 px-40 h-16">
       <div className="flex justify-between items-center align-center h-full">
-        <div>{<Icons.logo className="w-8 h-8 color-black" />}</div>
+        <div className="flex items-center gap-2">
+        <Image
+            src="/logo.png" // Replace with the actual path to the avatar image
+            alt="Profile Avatar"
+            className="h-8 w-8"
+            width={32}
+            height={32}
+                      
+        />
+        <h1 className="font-extrabold text-xl">GROOVE</h1>  
+        </div>
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
