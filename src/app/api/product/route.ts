@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { db } from "prisma/prisma";
+import { db } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -91,6 +91,41 @@ export async function GET(request: Request) {
     console.error("Error fetching products:", error);
     return NextResponse.json(
       { error: "Unable to fetch products" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    const { name, price, description, categoryId, stock, images } = body;
+
+    if (!name || !price || !categoryId || !images || images.length === 0) {
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 }
+      );
+    }
+
+    const product = await db.product.create({
+      data: {
+        name,
+        description,
+        price,
+        categoryId,
+        stock: stock || 0,
+        images: {
+          create: images.map((url: string) => ({ url })),
+        },
+      },
+    });
+
+    return NextResponse.json(product, { status: 201 });
+  } catch (error) {
+    console.error("Error creating product:", error);
+    return NextResponse.json(
+      { error: "Unable to create product" },
       { status: 500 }
     );
   }

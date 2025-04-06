@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import {
   Carousel,
   CarouselContent,
@@ -20,123 +22,138 @@ import ProductCard from "./ProductCard";
 const Featured = () => {
   const products = [
     {
-      id: 1,
-      name: "Basic Tee",
+      id: "32653157-7a3e-4d1d-acf3-01421b156f25",
+      name: "Philips SHP9500 HiFi",
       
       images:
       
         [
           {
-            url: "https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+            url: "https://gearsforears.com/cdn/shop/products/61JcYeMnkzL._AC_SL1335_5000x.jpg?v=1604584816",
 
           }
         ]
       ,
       
-      price: "$35",
-      description: "Black",
+      price: 2000,
+      category:{
+                  name: "Headphones",
+                },
+      
     },
     {
-      id: 2,
-      name: "Basic Tee",
+      id: "097e71b0-066e-4660-b867-4975c38dfb02",
+      name: "Audeze LCD-2 Classic Planar ",
       
       images:
       
         [
           {
-            url: "https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+            url: "https://gearsforears.com/cdn/shop/products/3_32543172-30bb-4c41-b8ff-869a5fc47055_5000x.jpg?v=1619511883",
 
           }
         ]
       ,
       
-      price: "$35",
-      description: "Black",
+      price: 2100,
+      category:{
+        name: "Headphones",
+      },
     },
     {
-      id: 3,
-      name: "Basic Tee",
+      id: "b574f030-4041-419f-9d02-a31fc9483fe4",
+      name: "Audio Phonic TRITON-55",
       
       images:
       
         [
           {
-            url: "https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+            url: "https://gearsforears.com/cdn/shop/files/1_8c746ad1-7de9-4294-84f8-16710fcfff10_5000x.png?v=1728285325",
 
           }
         ]
       ,
       
-      price: "$35",
-      description: "Black",
+      price: 5000,
+      category:{
+        name: "Speakers",
+      },
     },
     {
-      id: 4,
-      name: "Basic Tee",
+      id: "9dceabe6-df1f-4e83-98d4-2bb6aa83cfbb",
+      name: "Wooden Headphone Stand",
       
       images:
       
         [
           {
-            url: "https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+            url: "https://gearsforears.com/cdn/shop/products/84a68474-c2d4-4a02-bee2-3515507bf072_5000x.jpg?v=1599365089",
 
           }
         ]
       ,
       
-      price: "$35",
-      description: "Black",
+      price: 1500,
+      category:{
+        name: "Accessories",
+      },
     },
     {
-      id: 5,
-      name: "Basic Tee",
+      id: "ba1030d0-e404-48df-80c0-1d6d71530f9d",
+      name: "Etymotic Deluxe Zipper Case",
       
       images:
       
         [
           {
-            url: "https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+            url: "https://gearsforears.com/cdn/shop/products/case_5000x.jpg?v=1668796389",
 
           }
         ]
       ,
       
-      price: "$35",
-      description: "Black",
-    },,
-    {
-      id: 6,
-      name: "Basic Tee",
-      
-      images:
-      
-        [
-          {
-            url: "https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
-
-          }
-        ]
-      ,
-      
-      price: "$35",
-      description: "Black",
+      price: 800,
+      category:{
+        name: "Accessories",
+      },
     },
     {
-      id: 7,
-      name: "Basic Tee",
+      id: "33197732-a008-4ceb-bac5-7598d7aa10fc",
+      name: "Audio Phonic Full Range ",
       
       images:
       
         [
           {
-            url: "https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+            url: "https://gearsforears.com/cdn/shop/files/1_4bd7fe3a-7a6f-488c-a868-24b0508e4b13_5000x.png?v=1728378052",
 
           }
         ]
       ,
       
-      price: "$35",
-      description: "Black",
+      price: 4670,
+      category:{
+        name: "Speakers",
+      },
+    },
+    {
+      id: "bd1d80e3-592f-4737-9676-f3d7b375ba81",
+      name: "Dekoni Earpads",
+      
+      images:
+      
+        [
+          {
+            url: "https://gearsforears.com/cdn/shop/products/porta-pro-1b-scaled_5000x.jpg?v=1681381156",
+
+          }
+        ]
+      ,
+      
+      price: 400,
+      category:{
+        name: "Accessories",
+      },
     },
     // More products...
   ];

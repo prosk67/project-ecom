@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { db } from "prisma/prisma";
+import { db } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 

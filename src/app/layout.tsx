@@ -23,16 +23,14 @@ export const metadata = {
 import { ReactNode } from "react";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-
-  
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-200 flex flex-col items-center justify-center`}
+        className={`flex flex-col min-h-screen ${geistSans.variable} ${geistMono.variable} antialiased bg-slate-200 items-center justify-center`}
       >
-        <Navbar/>
+        <Navbar />
         {children}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );

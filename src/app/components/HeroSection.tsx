@@ -25,7 +25,7 @@ const HeroSection = () => {
         <CarouselContent>
           {/* Carousel Item 1 */}
           <CarouselItem className="flex justify-center">
-            <div className="rounded-2xl my-10 relative w-full h-[60vh] max-w-7xl">
+            <div className="rounded-2xl my-10 relative w-[70vw] h-[60vh] max-w-7xl">
               {/* Background Image */}
               <Image
                 src="/hero2.jpg"

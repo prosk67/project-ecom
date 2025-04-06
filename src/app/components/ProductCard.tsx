@@ -1,10 +1,16 @@
-//@ts-nocheck
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@headlessui/react";
 import React from "react";
 
-const ProductCard = ({ product }) => {
+interface Product {
+  id: string;
+  name: string;
+  price: string;
+  images: { url: string }[];
+  category?: { name: string };
+}
 
+const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   const handleSubmit = async () => {
     const userId = localStorage.getItem("userId");
     if (!userId) {
@@ -41,11 +47,7 @@ const ProductCard = ({ product }) => {
         <div className="w-full mt-4 flex justify-between">
           <div>
             <h3 className="text-sm text-gray-700">
-              
-                {/* <span aria-hidden="true" className="absolute inset-0" /> */}
-              <a href=""> 
-                {product.name}
-              </a>
+              <a href="">{product.name}</a>
             </h3>
             <p className="mt-1 text-sm text-gray-500">
               {product.category?.name ? product.category.name : "No category"}
@@ -53,8 +55,11 @@ const ProductCard = ({ product }) => {
           </div>
           <p className="text-sm font-medium text-gray-900">BDT {parseInt(product.price)}</p>
         </div>
-        <div className="mt-4 w-full">
-          <Button className="w-full bg-black text-white px-4 py-2 rounded hover:bg-gray-800" onClick={handleSubmit}>
+        <div className="mt-4 w-full flex flex-col justify-end">
+          <Button
+            className=" w-full bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+            onClick={handleSubmit}
+          >
             Add to cart
           </Button>
         </div>

@@ -12,7 +12,7 @@ const CTA = () => {
           Sign up today and get access to exclusive content and special offers.
         </p>
         <Link
-          href="/login"
+          href="/signup"
           className="inline-block bg-white text-black hover:bg-transparent hover:text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300"
         >
           Sign Up Now

@@ -1,4 +1,4 @@
-import { db } from './prisma';
+import { db } from '../src/lib/prisma';
 import { faker } from '@faker-js/faker';
 
 
