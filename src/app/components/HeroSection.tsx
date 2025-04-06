@@ -50,7 +50,7 @@ const HeroSection = () => {
 
           {/* Carousel Item 2 */}
           <CarouselItem className="flex justify-center">
-            <div className="rounded-2xl my-10 relative w-full h-[60vh] max-w-7xl">
+            <div className="rounded-2xl my-10 relative w-[70vw] h-[60vh] max-w-7xl">
               {/* Background Image */}
               <Image
                 src="/hero3.jpg"
@@ -75,7 +75,7 @@ const HeroSection = () => {
 
           {/* Carousel Item 3 */}
           <CarouselItem className="flex justify-center">
-            <div className="rounded-2xl my-10 relative w-full h-[60vh] max-w-7xl">
+            <div className="rounded-2xl my-10 relative w-[70vw] h-[60vh] max-w-7xl">
               {/* Background Image */}
               <Image
                 src="/hero1.jpg"
