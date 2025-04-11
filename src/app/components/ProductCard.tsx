@@ -38,16 +38,16 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
 
   return (
     <Card>
-      <CardContent className="flex flex-col aspect-square items-center justify-center p-6">
+      <CardContent className=" flex flex-col aspect-square items-center justify-center p-6 shadow-xl">
         <img
           alt={product.id}
           src={product.images[0].url}
-          className="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-60"
+          className="aspect-square w-full rounded-md bg-white object-contain group-hover:opacity-75 lg:aspect-auto lg:h-60"
         />
         <div className="w-full mt-4 flex justify-between">
           <div>
             <h3 className="text-sm text-gray-700">
-              <a href="">{product.name}</a>
+              {product.name}
             </h3>
             <p className="mt-1 text-sm text-gray-500">
               {product.category?.name ? product.category.name : "No category"}

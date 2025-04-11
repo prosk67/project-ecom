@@ -3,7 +3,7 @@ import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
 const Footer = () => {
     return (
         <footer className="bg-gray-950 w-full text-white py-10 mt-auto">
-            <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 px-4">
+            <div className="container w-[70vw] mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 px-4">
                 {/* Company Info */}
                 <div>
                     <h2 className="text-2xl font-semibold mb-4">AudioShop</h2>
@@ -11,9 +11,9 @@ const Footer = () => {
                 </div>
 
                 {/* Links */}
-                <div>
+                <div className="flex flex-col items-center">
                     <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
-                    <ul className="space-y-2">
+                    <ul className="text-center space-y-2">
                         <li><a href="#" className="text-gray-400 hover:text-white">Home</a></li>
                         <li><a href="#" className="text-gray-400 hover:text-white">Shop</a></li>
                         <li><a href="#" className="text-gray-400 hover:text-white">About Us</a></li>
@@ -22,9 +22,9 @@ const Footer = () => {
                 </div>
 
                 {/* Support */}
-                <div>
+                <div className="flex flex-col items-center">
                     <h3 className="text-xl font-semibold mb-4">Support</h3>
-                    <ul className="space-y-2">
+                    <ul className="text-center space-y-2">
                         <li><a href="#" className="text-gray-400 hover:text-white">FAQs</a></li>
                         <li><a href="#" className="text-gray-400 hover:text-white">Shipping & Returns</a></li>
                         <li><a href="#" className="text-gray-400 hover:text-white">Privacy Policy</a></li>
@@ -33,7 +33,7 @@ const Footer = () => {
                 </div>
 
                 {/* Social Media */}
-                <div>
+                <div className="flex flex-col items-end">
                     <h3 className="text-xl font-semibold mb-4">Follow Us</h3>
                     <div className="flex space-x-4">
                         <a href="#" className="text-gray-400 hover:text-white"><FaFacebook size={24} /></a>
