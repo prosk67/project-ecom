@@ -93,12 +93,47 @@ export default function Cart() {
     });
   };
 
-  const handleCheckout = () => {
-    // Simulate a successful payment
-    setTimeout(() => {
-      setShowSuccessPopup(true); // Show the success popup
-    }, 1000);
+  const handleCheckout = async () => {
+    try {
+      const userId = localStorage.getItem("userId");
+      if (!userId) {
+        alert("Please login to proceed with checkout.");
+        return;
+      }
+  
+      // Create an order with the current cart items
+      const response = await fetch("/api/order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+          items: cartItems.map((item) => ({
+            productId: item.product.id,
+            quantity: item.quantity,
+            price: item.product.price,
+          })),
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to create order");
+      }
+  
+      // Simulate a successful payment
+      setTimeout(() => {
+        setShowSuccessPopup(true); // Show the success popup
+      }, 1000);
+  
+      // Clear the cart after successful order creation
+      setCartItems([]);
+    } catch (error) {
+      console.error("Error during checkout:", error);
+      alert("Failed to complete checkout. Please try again.");
+    }
   };
+  
 
   const closePopup = () => {
     setShowSuccessPopup(false); // Close the popup
